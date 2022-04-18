@@ -24,7 +24,7 @@ class SoDetailService {
     if (result > 0) {
       final List<Map<String, Object?>> data = await db.rawQuery("SELECT * FROM so_detail ORDER BY id DESC LIMIT 1");
       if (data.isNotEmpty) {
-        final List<StockopnameDetail> list = await getSoDetail(data[0]['so_id'].toString());
+        final List<StockopnameDetail> list = await getSoDetailById(data[0]['so_id'].toString(), int.parse(data[0]['id'].toString()));
         return list[0];
       }
     }
