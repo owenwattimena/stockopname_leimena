@@ -50,9 +50,10 @@ class SoDetailController extends GetxController {
     // );
     List<StockopnameDetail> soDetailItem = listSoDetail.value.where((element) => element.sku == item.sku).toList();
     if (soDetailItem.isEmpty) {
-      listSoDetail.update((val) async {
-        StockopnameDetail soDetail = await StockopnameDetailProvider.addSoItem(item, soId.value);
-        val!.insert(0, soDetail);
+      StockopnameDetailProvider.addSoItem(item, soId.value).then((value) {
+        listSoDetail.update((val) {
+          val!.insert(0, value);
+        });
       });
 
       return true;
