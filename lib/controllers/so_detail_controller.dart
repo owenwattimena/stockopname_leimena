@@ -40,20 +40,20 @@ class SoDetailController extends GetxController {
   }
 
   bool setListSoDetail(Item item) {
-    final stockopnameDetail = StockopnameDetail(
-      barcode: item.barcode,
-      id: null,
-      item: item.item,
-      lastStock: item.lastStock,
-      sku: item.sku,
-      soStock: 0,
-    );
+    // final stockopnameDetail = StockopnameDetail(
+    //   barcode: item.barcode,
+    //   id: null,
+    //   item: item.item,
+    //   lastStock: item.lastStock,
+    //   sku: item.sku,
+    //   soStock: 0,
+    // );
     List<StockopnameDetail> soDetailItem = listSoDetail.value.where((element) => element.sku == item.sku).toList();
     if (soDetailItem.isEmpty) {
       listSoDetail.update((val) {
-        val!.insert(0, stockopnameDetail);
+        StockopnameDetailProvider.addSoItem(item, soId.value).then((value) => val!.insert(0, value));
       });
-      StockopnameDetailProvider.addSoItem(item, soId.value);
+
       return true;
     }
     return false;

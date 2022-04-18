@@ -10,7 +10,7 @@ class StockopnameDetailProvider {
     return soDetailService.getSoDetail(soId);
   }
 
-  static Future<bool> addSoItem(Item item, String soId) async {
+  static Future<StockopnameDetail> addSoItem(Item item, String soId) async {
     final soDetailService = SoDetailService();
     return soDetailService.storeProduct(item, soId);
   }

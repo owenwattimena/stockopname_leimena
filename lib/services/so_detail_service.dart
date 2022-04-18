@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:stockopname_leimena/models/item.dart';
+import 'package:stockopname_leimena/models/stockopname.dart';
 import 'package:stockopname_leimena/models/stockopname_detail.dart';
 
 import 'database_service.dart';
@@ -11,7 +12,7 @@ class SoDetailService {
     database = DatabaseService();
   }
 
-  Future<bool> storeProduct(Item item, String soId) async {
+  Future<StockopnameDetail> storeProduct(Item item, String soId) async {
     Database db = await database.database;
     const sql = 'INSERT INTO so_detail(id, so_id, product_id, so_stock) VALUES(?,?,?,?)';
     final result = await db.rawInsert(sql, [
@@ -20,7 +21,13 @@ class SoDetailService {
       item.id,
       0
     ]);
-    return result > 0;
+    if (result > 0) {
+      final List<Map<String, Object?>> data = await db.rawQuery("SELECT * FROM so_detail ORDER BY id DESC LIMIT 1");
+      if (data.isNotEmpty) {
+        return StockopnameDetail.fromMapObject(data.last);
+      }
+    }
+    return StockopnameDetail();
   }
 
   Future<List<StockopnameDetail>> getSoDetail(String soId, {String? query}) async {
