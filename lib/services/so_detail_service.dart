@@ -78,6 +78,7 @@ class SoDetailService {
     JOIN product ON so_detail.product_id = product.id
     JOIN stockopname ON so_detail.so_id = stockopname.so_id
     WHERE so_detail.so_id = ?
+    ORDER BY so_detail.id DESC
     ''';
       mapObject = await db.rawQuery(sql, [
         soId
@@ -98,6 +99,8 @@ class SoDetailService {
     JOIN stockopname ON so_detail.so_id = stockopname.so_id
     WHERE so_detail.so_id = ? AND 
     (product.sku LIKE '%$query%' OR product.product_name LIKE '%$query%' OR product.barcode LIKE '%$query%')
+    ORDER BY so_detail.id DESC
+
     ''';
       mapObject = await db.rawQuery(sql, [
         soId
