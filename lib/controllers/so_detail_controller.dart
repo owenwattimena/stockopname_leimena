@@ -46,7 +46,7 @@ class SoDetailController extends GetxController {
       sku: item.sku,
       soStock: 0,
     );
-    StockopnameDetail soDetailItem = listSoDetail.value.where((element) => element.sku == item.sku).first;
+    StockopnameDetail? soDetailItem = listSoDetail.value.where((element) => element.sku == item.sku).first;
     if (soDetailItem.sku == null) {
       listSoDetail.update((val) {
         val!.insert(0, stockopnameDetail);

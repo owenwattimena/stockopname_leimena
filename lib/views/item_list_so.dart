@@ -33,10 +33,13 @@ class ItemListSo extends StatelessWidget {
             itemBuilder: (context, index) {
               return ItemProduct(
                 onTap: () {
-                  if (soDetailC.setListSoDetail(itemSoC.listItemSo.value[index])) return Navigator.pop(context);
-                  const SnackBar(
-                    content: Text('Item sudah di tambahkan'),
-                  );
+                  if (soDetailC.setListSoDetail(itemSoC.listItemSo.value[index])) {
+                    Navigator.pop(context);
+                  } else {
+                    const SnackBar(
+                      content: Text('Item sudah di tambahkan'),
+                    );
+                  }
                 },
                 sku: itemSoC.listItemSo.value[index].sku,
                 barcode: itemSoC.listItemSo.value[index].barcode,
