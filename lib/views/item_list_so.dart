@@ -36,9 +36,10 @@ class ItemListSo extends StatelessWidget {
                   if (soDetailC.setListSoDetail(itemSoC.listItemSo.value[index])) {
                     Navigator.pop(context);
                   } else {
-                    const SnackBar(
+                    const snackBar = SnackBar(
                       content: Text('Item sudah di tambahkan'),
                     );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
                 sku: itemSoC.listItemSo.value[index].sku,
