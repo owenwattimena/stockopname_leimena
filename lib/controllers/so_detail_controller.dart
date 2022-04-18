@@ -27,6 +27,7 @@ class SoDetailController extends GetxController {
     listSoDetail.update((val) {
       if (val![index].soStock! > 0) {
         val[index].soStock = val[index].soStock! - 1;
+        StockopnameDetailProvider.setStock(val[index].soStock!, val[index].id!);
       }
     });
   }
@@ -34,6 +35,7 @@ class SoDetailController extends GetxController {
   set stockIncrement(int index) {
     listSoDetail.update((val) {
       val![index].soStock = val[index].soStock! + 1;
+      StockopnameDetailProvider.setStock(val[index].soStock!, val[index].id!);
     });
   }
 

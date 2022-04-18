@@ -19,4 +19,9 @@ class StockopnameDetailProvider {
     final soDetailService = SoDetailService();
     return soDetailService.getSoDetail(soId, query: query);
   }
+
+  static Future<bool> setStock(int stock, int idDetailSo) async {
+    final soDetailService = SoDetailService();
+    return await soDetailService.setStock(stock, idDetailSo);
+  }
 }

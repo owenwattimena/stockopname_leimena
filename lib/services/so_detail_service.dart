@@ -72,4 +72,11 @@ class SoDetailService {
     }
     return result;
   }
+
+  Future<bool> setStock(int stock, int idDetailSo) async {
+    Database db = await database.database;
+    final sql = 'UPDATE so_detail SET so_stock = $stock WHERE id = $idDetailSo';
+    final result = await db.rawUpdate(sql);
+    return result > 0;
+  }
 }
