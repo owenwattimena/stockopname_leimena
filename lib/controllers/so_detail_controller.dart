@@ -55,7 +55,6 @@ class SoDetailController extends GetxController {
           val!.insert(0, value);
         });
       });
-
       return true;
     }
     return false;
