@@ -46,8 +46,7 @@ class ItemCount extends StatelessWidget {
                 GestureDetector(
                   onTap: decrement,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     color: primaryColor,
                     child: const Icon(Icons.remove, color: Colors.white),
                   ),
@@ -55,8 +54,7 @@ class ItemCount extends StatelessWidget {
                 GestureDetector(
                   onTap: () {},
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 9, vertical: 9.5),
+                    padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 9.5),
                     color: Colors.white,
                     child: Text('$stock', style: fontStyleBold16),
                   ),
@@ -64,8 +62,7 @@ class ItemCount extends StatelessWidget {
                 GestureDetector(
                   onTap: increment,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     color: primaryColor,
                     child: const Icon(Icons.add, color: Colors.white),
                   ),
@@ -77,10 +74,15 @@ class ItemCount extends StatelessWidget {
         const SizedBox(height: 3),
         Text(itemName ?? '', style: fontStyleBold16),
         const SizedBox(height: 3),
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Text(barcode ?? ''),
-          const SizedBox(width: 30),
-          Text('Last Stock: $lastStock'),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(
+            children: [
+              Text(barcode ?? ''),
+              const SizedBox(width: 30),
+              Text('Last Stock: $lastStock'),
+            ],
+          ),
+          Text('${stock! - lastStock!}', style: (stock! - lastStock! < lastStock!) ? fontStyle12.copyWith(color: Colors.red) : fontStyle12)
         ]),
       ]),
     );

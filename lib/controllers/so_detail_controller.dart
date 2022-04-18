@@ -15,8 +15,7 @@ class SoDetailController extends GetxController {
 
   void searchSoDetail(String query) {
     if (query.isNotEmpty) {
-      StockopnameDetailProvider.searchStockopnameDetail(query, soId.value)
-          .then((value) {
+      StockopnameDetailProvider.searchStockopnameDetail(query, soId.value).then((value) {
         listSoDetail.value = value;
       });
     } else {
@@ -38,18 +37,23 @@ class SoDetailController extends GetxController {
     });
   }
 
-  set setListSoDetail(Item item) {
+  bool setListSoDetail(Item item) {
     final stockopnameDetail = StockopnameDetail(
-                    barcode: item.barcode,
-                    id: null,
-                    item: item.item,
-                    lastStock: item.lastStock,
-                    sku: item.sku,
-                    soStock: 0,
-                  );
-    listSoDetail.update((val) {
-      val!.insert(0,stockopnameDetail);
-    });
-    StockopnameDetailProvider.addSoItem(item, soId.value);
+      barcode: item.barcode,
+      id: null,
+      item: item.item,
+      lastStock: item.lastStock,
+      sku: item.sku,
+      soStock: 0,
+    );
+    StockopnameDetail soDetailItem = listSoDetail.value.where((element) => element.sku == item.sku).first;
+    if (soDetailItem.sku == null) {
+      listSoDetail.update((val) {
+        val!.insert(0, stockopnameDetail);
+      });
+      StockopnameDetailProvider.addSoItem(item, soId.value);
+      return true;
+    }
+    return false;
   }
 }
