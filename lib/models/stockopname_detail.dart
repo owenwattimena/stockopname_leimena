@@ -1,6 +1,6 @@
-import 'package:stockopname_leimena/models/stockopname.dart';
+// import 'package:stockopname_leimena/models/stockopname.dart';
 
-class StockopnameDetail{
+class StockopnameDetail {
   int? id;
   String? soId;
   String? sku;
@@ -21,16 +21,16 @@ class StockopnameDetail{
     this.lastStock,
   });
 
-  factory StockopnameDetail.fromMapObject(Map<String, dynamic> json)=>StockopnameDetail(
-    id: json['id'],
-    soId: json['so_id'],
-    sku: json['sku'],
-    item: json['product_name'],
-    barcode: json['barcode'],
-    uom: json['uom'],
-    soStock: json['so_stock'],
-    lastStock: json['last_stock'],
-  );
+  factory StockopnameDetail.fromMapObject(Map<String, dynamic> json) => StockopnameDetail(
+        id: json['id'],
+        soId: json['so_id'],
+        sku: json['sku'],
+        item: json['product_name'],
+        barcode: json['barcode'],
+        uom: json['uom'],
+        soStock: json['so_stock'],
+        lastStock: json['last_stock'],
+      );
 }
 // List<StockopnameDetail> soDetail = [];
 
