@@ -29,13 +29,13 @@ environment:
 dependencies:
   csv: ^5.0.1
   cupertino_icons: ^1.0.2
-  file_picker: null
+  file_picker: any
   flutter:
     sdk: flutter
   get: ^4.6.1
   intl: ^0.17.0
   path_provider: ^2.0.9
-  share_plus: null
+  share_plus: any
   sqflite: any
 
 dev_dependencies:
