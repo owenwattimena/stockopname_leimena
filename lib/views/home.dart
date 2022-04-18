@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: const Text('SO RSUP Leimena'),
+        title: const Text('SO RSUP Dr.J.LEIMENA'),
         actions: [
           IconButton(
             icon: const Icon(Icons.view_module),
@@ -31,8 +31,7 @@ class Home extends StatelessWidget {
               createdAt: homeC.listStockopname.value[index].createdAt!,
               createdBy: homeC.listStockopname.value[index].createdBy!,
               onTap: () async {
-                await Navigator.pushNamed(context, 'detail_so',
-                    arguments: homeC.listStockopname.value[index].soId);
+                await Navigator.pushNamed(context, 'detail_so', arguments: homeC.listStockopname.value[index].soId);
                 Get.delete<SoDetailController>();
               },
               onLongTap: () {
@@ -45,8 +44,7 @@ class Home extends StatelessWidget {
                             leading: const Icon(Icons.share),
                             title: const Text('Bagikan'),
                             onTap: () {
-                              homeC.shareExportFile(
-                                  homeC.listStockopname.value[index].soId!);
+                              homeC.shareExportFile(homeC.listStockopname.value[index].soId!);
                             },
                           ),
                         ]),
@@ -63,8 +61,7 @@ class Home extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           idSoController.text = homeC.generateSoId;
-          soDateController.text =
-              DateFormat('yyyy-MM-dd').format(DateTime.now());
+          soDateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
           showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -114,8 +111,7 @@ class Home extends StatelessWidget {
                             child: ElevatedButton(
                               child: const Text('CANCEL'),
                               style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
+                                backgroundColor: MaterialStateProperty.all<Color>(
                                   yellowColor,
                                 ),
                               ),
