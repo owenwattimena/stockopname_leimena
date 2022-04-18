@@ -39,7 +39,7 @@ class SoDetailController extends GetxController {
     });
   }
 
-  bool setListSoDetail(Item item) {
+  Future<bool> setListSoDetail(Item item) async {
     // final stockopnameDetail = StockopnameDetail(
     //   barcode: item.barcode,
     //   id: null,
@@ -50,10 +50,9 @@ class SoDetailController extends GetxController {
     // );
     List<StockopnameDetail> soDetailItem = listSoDetail.value.where((element) => element.sku == item.sku).toList();
     if (soDetailItem.isEmpty) {
-      StockopnameDetailProvider.addSoItem(item, soId.value).then((value) {
-        listSoDetail.update((val) {
-          val!.insert(0, value);
-        });
+      StockopnameDetail soDetail = await StockopnameDetailProvider.addSoItem(item, soId.value);
+      listSoDetail.update((val) {
+        val!.insert(0, soDetail);
       });
       return true;
     }

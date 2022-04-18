@@ -32,8 +32,8 @@ class ItemListSo extends StatelessWidget {
             itemCount: itemSoC.listItemSo.value.length,
             itemBuilder: (context, index) {
               return ItemProduct(
-                onTap: () {
-                  if (soDetailC.setListSoDetail(itemSoC.listItemSo.value[index])) {
+                onTap: () async {
+                  if (await soDetailC.setListSoDetail(itemSoC.listItemSo.value[index])) {
                     Navigator.pop(context);
                   } else {
                     const snackBar = SnackBar(
