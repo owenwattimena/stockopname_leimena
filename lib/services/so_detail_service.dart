@@ -24,10 +24,40 @@ class SoDetailService {
     if (result > 0) {
       final List<Map<String, Object?>> data = await db.rawQuery("SELECT * FROM so_detail ORDER BY id DESC LIMIT 1");
       if (data.isNotEmpty) {
-        return StockopnameDetail.fromMapObject(data[0]);
+        final List<StockopnameDetail> list = await getSoDetail(data[0]['so_id'].toString());
+        return list[0];
       }
     }
     return StockopnameDetail();
+  }
+
+  Future<List<StockopnameDetail>> getSoDetailById(String soId, int id) async {
+    Database db = await database.database;
+    List<Map<String, Object?>> mapObject;
+    const sql = '''
+    SELECT 
+    so_detail.id, 
+    so_detail.so_id, 
+    product.sku, 
+    product.product_name, 
+    product.barcode, 
+    product.uom, 
+    so_detail.so_stock, 
+    product.last_stock
+    FROM so_detail
+    JOIN product ON so_detail.product_id = product.id
+    JOIN stockopname ON so_detail.so_id = stockopname.so_id
+    WHERE so_detail.so_id = ? AND so_detail.id = ?
+    ''';
+    mapObject = await db.rawQuery(sql, [
+      soId,
+      id
+    ]);
+    List<StockopnameDetail> result = [];
+    for (var i = 0; i < mapObject.length; i++) {
+      result.add(StockopnameDetail.fromMapObject(mapObject[i]));
+    }
+    return result;
   }
 
   Future<List<StockopnameDetail>> getSoDetail(String soId, {String? query}) async {
