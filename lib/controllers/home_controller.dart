@@ -42,6 +42,8 @@ class HomeController extends GetxController {
 
   void shareExportFile(String soId) async {
     final _share = await StockopnameProvider.export(soId);
-    Share.shareFiles([_share]);
+    Share.shareFiles([
+      _share
+    ]);
   }
 }

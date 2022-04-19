@@ -7,12 +7,11 @@ import 'package:path_provider/path_provider.dart';
 // import 'package:file_picker/file_picker.dart';
 import '../models/stockopname.dart';
 import '../services/so_service.dart';
-class StockopnameProvider {
 
+class StockopnameProvider {
   static getStockopname() async {
     final soService = SoService();
     return await soService.getSo();
-
   }
 
   static storeSo(Stockopname so) async {
@@ -25,10 +24,22 @@ class StockopnameProvider {
     return result;
   }
 
-  static Future export(String soId)async{
-    Stockopname result = stockopname.where((so) => so.soId == soId).first;
-    List<StockopnameDetail> data = await StockopnameDetailProvider.getStockopnameDetail(soId);
-    List<List<dynamic>> rows = [['SKU','BARCODE','PRODUCT NAME','UOM','LAST STOCK', 'SO STOCK','WAREHOUSE','AUDITOR']];
+  static Future export(String soId) async {
+    final soService = SoService();
+    List<StockopnameDetail> data = await soService.getSoWithDetail(soId);
+    List<List<dynamic>> rows = [
+      [
+        'SKU',
+        'BARCODE',
+        'PRODUCT NAME',
+        'UOM',
+        'LAST STOCK',
+        'SO STOCK',
+        'DEVIATION',
+        'WAREHOUSE',
+        'AUDITOR'
+      ]
+    ];
     for (var item in data) {
       List row = [];
       row.add(item.sku);
@@ -37,8 +48,9 @@ class StockopnameProvider {
       row.add(item.uom);
       row.add(item.lastStock);
       row.add(item.soStock);
-      row.add(result.warehouse);
-      row.add(result.createdBy);
+      row.add((item.soStock! - item.lastStock!));
+      row.add(item.warehouse);
+      row.add(item.auditor);
 
       rows.add(row);
     }

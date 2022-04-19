@@ -7,6 +7,8 @@ class StockopnameDetail {
   String? item;
   String? barcode;
   String? uom;
+  String? auditor;
+  String? warehouse;
   int? soStock;
   int? lastStock;
 
@@ -17,6 +19,8 @@ class StockopnameDetail {
     this.item,
     this.barcode,
     this.uom,
+    this.auditor,
+    this.warehouse,
     this.soStock,
     this.lastStock,
   });
@@ -28,6 +32,8 @@ class StockopnameDetail {
         item: json['product_name'],
         barcode: json['barcode'],
         uom: json['uom'],
+        auditor: json['auditor'],
+        warehouse: json['warehouse'],
         soStock: json['so_stock'],
         lastStock: json['last_stock'],
       );
