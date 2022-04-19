@@ -32,7 +32,7 @@ class StockopnameDetail {
         item: json['product_name'],
         barcode: json['barcode'],
         uom: json['uom'],
-        auditor: json['auditor'],
+        auditor: json['created_by'],
         warehouse: json['warehouse'],
         soStock: json['so_stock'],
         lastStock: json['last_stock'],
