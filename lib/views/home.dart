@@ -9,6 +9,7 @@ class Home extends StatelessWidget {
     TextEditingController soDateController = TextEditingController();
     TextEditingController nameController = TextEditingController();
     TextEditingController warehouseController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
     var homeC = Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
@@ -70,36 +71,51 @@ class Home extends StatelessWidget {
                     'Create SO',
                     textAlign: TextAlign.center,
                   ),
-                  content: IntrinsicHeight(
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: idSoController,
-                          decoration: const InputDecoration(
-                            enabled: false,
-                            labelText: 'SO Id',
+                  content: Form(
+                    key: _formKey,
+                    child: IntrinsicHeight(
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: idSoController,
+                            decoration: const InputDecoration(
+                              enabled: false,
+                              labelText: 'SO Id',
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          controller: soDateController,
-                          decoration: const InputDecoration(
-                            enabled: false,
-                            labelText: 'SO Date',
+                          TextFormField(
+                            controller: soDateController,
+                            decoration: const InputDecoration(
+                              enabled: false,
+                              labelText: 'SO Date',
+                            ),
                           ),
-                        ),
-                        TextFormField(
-                          controller: nameController,
-                          decoration: const InputDecoration(
-                            labelText: 'Auditor Name',
+                          TextFormField(
+                            controller: nameController,
+                            decoration: const InputDecoration(
+                              labelText: 'Auditor Name',
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Tidak boleh kosong!';
+                              }
+                              return null;
+                            },
                           ),
-                        ),
-                        TextFormField(
-                          controller: warehouseController,
-                          decoration: const InputDecoration(
-                            labelText: 'Warehouse',
+                          TextFormField(
+                            controller: warehouseController,
+                            decoration: const InputDecoration(
+                              labelText: 'Warehouse',
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Tidak boleh kosong!';
+                              }
+                              return null;
+                            },
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   actions: [
