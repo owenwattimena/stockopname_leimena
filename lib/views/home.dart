@@ -24,39 +24,44 @@ class Home extends StatelessWidget {
           ),
         ],
       ),
-      body: Obx(
-        () => ListView.builder(
-          itemCount: homeC.listStockopname.value.length,
-          itemBuilder: (context, index) {
-            return ItemSo(
-              createdAt: homeC.listStockopname.value[index].createdAt!,
-              createdBy: homeC.listStockopname.value[index].createdBy!,
-              onTap: () async {
-                await Navigator.pushNamed(context, 'detail_so', arguments: homeC.listStockopname.value[index].soId);
-                Get.delete<SoDetailController>();
-              },
-              onLongTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return IntrinsicHeight(
-                        child: Column(children: [
-                          ListTile(
-                            leading: const Icon(Icons.share),
-                            title: const Text('Bagikan'),
-                            onTap: () {
-                              homeC.shareExportFile(homeC.listStockopname.value[index].soId!);
-                            },
-                          ),
-                        ]),
-                      );
-                    });
-              },
-              warehouse: homeC.listStockopname.value[index].warehouse!,
-              totalItemSo: homeC.listStockopname.value[index].totalSoItem!,
-              soId: homeC.listStockopname.value[index].soId!,
-            );
-          },
+      body: RefreshIndicator(
+        onRefresh: () async {
+          homeC.getStockopname();
+        },
+        child: Obx(
+          () => ListView.builder(
+            itemCount: homeC.listStockopname.value.length,
+            itemBuilder: (context, index) {
+              return ItemSo(
+                createdAt: homeC.listStockopname.value[index].createdAt!,
+                createdBy: homeC.listStockopname.value[index].createdBy!,
+                onTap: () async {
+                  await Navigator.pushNamed(context, 'detail_so', arguments: homeC.listStockopname.value[index].soId);
+                  Get.delete<SoDetailController>();
+                },
+                onLongTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return IntrinsicHeight(
+                          child: Column(children: [
+                            ListTile(
+                              leading: const Icon(Icons.share),
+                              title: const Text('Bagikan'),
+                              onTap: () {
+                                homeC.shareExportFile(homeC.listStockopname.value[index].soId!);
+                              },
+                            ),
+                          ]),
+                        );
+                      });
+                },
+                warehouse: homeC.listStockopname.value[index].warehouse!,
+                totalItemSo: homeC.listStockopname.value[index].totalSoItem!,
+                soId: homeC.listStockopname.value[index].soId!,
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
