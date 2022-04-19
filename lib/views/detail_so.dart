@@ -123,7 +123,7 @@ class DetailSo extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        detailSoC.stockSo(index, int.parse(stock));
+                        detailSoC.stockSo(index, int.parse(stockController.text));
                         Navigator.pop(context);
                       },
                     ),
