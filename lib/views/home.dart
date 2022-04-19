@@ -148,13 +148,15 @@ class Home extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              homeC.storeSo(
-                                soId: idSoController.text,
-                                createdBy: nameController.text,
-                                warehouse: warehouseController.text,
-                                createdAt: soDateController.text,
-                              );
-                              Navigator.pop(context);
+                              if (_formKey.currentState!.validate()) {
+                                homeC.storeSo(
+                                  soId: idSoController.text,
+                                  createdBy: nameController.text,
+                                  warehouse: warehouseController.text,
+                                  createdAt: soDateController.text,
+                                );
+                                Navigator.pop(context);
+                              }
                             },
                           ),
                         )),
