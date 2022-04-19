@@ -84,7 +84,7 @@ class ItemCount extends StatelessWidget {
               Text('Last Stock: $lastStock'),
             ],
           ),
-          Text(((stock! - lastStock! > lastStock!) ? '+' : '') + '${(stock! - lastStock!)}', style: (stock! - lastStock! < lastStock!) ? fontStyle12.copyWith(color: Colors.red) : fontStyle12)
+          Text(((stock! - lastStock! > lastStock!) ? '+' : '') + '${(stock! - lastStock!)}', style: (stock! - lastStock! < lastStock!) ? fontStyle12.copyWith(color: Colors.red) : fontStyle12.copyWith(color: Colors.black))
         ]),
       ]),
     );
