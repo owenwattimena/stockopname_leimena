@@ -72,6 +72,7 @@ class DetailSo extends StatelessWidget {
   }
 
   void showStockDialog(BuildContext context, int index, String stock) {
+    final detailSoC = Get.find<SoDetailController>();
     TextEditingController stockController = TextEditingController(text: stock);
     showDialog(
         context: context,
@@ -122,6 +123,7 @@ class DetailSo extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
+                        detailSoC.stockSo(index, int.parse(stock));
                         Navigator.pop(context);
                       },
                     ),
