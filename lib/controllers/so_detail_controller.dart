@@ -32,6 +32,15 @@ class SoDetailController extends GetxController {
     });
   }
 
+  void stockSo(int index, int stock) {
+    listSoDetail.update((val) {
+      if (stock < 0) {
+        val![index].soStock = stock;
+        StockopnameDetailProvider.setStock(val[index].soStock!, val[index].id!);
+      }
+    });
+  }
+
   set stockIncrement(int index) {
     listSoDetail.update((val) {
       val![index].soStock = val[index].soStock! + 1;

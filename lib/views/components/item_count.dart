@@ -7,8 +7,9 @@ class ItemCount extends StatelessWidget {
   final int? stock;
   final int? lastStock;
   final String? uom;
-  final Function() increment;
   final Function() decrement;
+  final Function() onStockClick;
+  final Function() increment;
 
   const ItemCount({
     Key? key,
@@ -20,6 +21,7 @@ class ItemCount extends StatelessWidget {
     this.lastStock,
     required this.increment,
     required this.decrement,
+    required this.onStockClick,
   }) : super(key: key);
 
   @override
@@ -52,7 +54,7 @@ class ItemCount extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: onStockClick,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 9.5),
                     color: Colors.white,
