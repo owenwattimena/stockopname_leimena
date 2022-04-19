@@ -16,13 +16,11 @@ class ProductProvider {
   static Future<void> importFile(PlatformFile file) async {
     final productService = ProductService();
     final input = File(file.path!).openRead();
-    final fields = await input
-        .transform(utf8.decoder)
-        .transform(const CsvToListConverter())
-        .toList();
+    final fields = await input.transform(utf8.decoder).transform(const CsvToListConverter()).toList();
     for (int i = 0; i < fields.length; i++) {
       if (i > 0) {
-        await productService.storeProduct(Item.fromArray(fields[i], ++i));
+        int j = 1 + i;
+        await productService.storeProduct(Item.fromArray(fields[i], j));
       }
     }
   }
