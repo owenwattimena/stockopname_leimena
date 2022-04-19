@@ -19,7 +19,11 @@ class SoService {
     final mapObject = await db.rawQuery(sql);
     List<Stockopname> result = [];
     for (var i = 0; i < mapObject.length; i++) {
-      result.add(Stockopname.fromJson(mapObject[i]));
+      const sql = 'SELECT COUNT(*) FROM so_detail WHERE so_id=?';
+      int? total = Sqflite.firstIntValue(await db.rawQuery(sql, [
+        mapObject[i]['so_id']
+      ]));
+      result.add(Stockopname.fromJson(mapObject[i], totalItem: total));
     }
     return result;
   }

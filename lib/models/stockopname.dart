@@ -1,6 +1,4 @@
-
 class Stockopname {
-
   Stockopname({
     this.id,
     this.soId,
@@ -17,14 +15,14 @@ class Stockopname {
   String? createdBy;
   int? totalSoItem;
 
-  factory Stockopname.fromJson(Map<String, dynamic> json) => Stockopname(
-    id: json["id"],
-    soId: json["so_id"],
-    warehouse: json["warehouse"],
-    createdAt: DateTime.parse(json["created_at"]),
-    createdBy: json["created_by"],
-    totalSoItem: json["total_so_items"] ?? 0,
-  );
+  factory Stockopname.fromJson(Map<String, dynamic> json, {int? totalItem}) => Stockopname(
+        id: json["id"],
+        soId: json["so_id"],
+        warehouse: json["warehouse"],
+        createdAt: DateTime.parse(json["created_at"]),
+        createdBy: json["created_by"],
+        totalSoItem: totalItem ?? 0,
+      );
 }
 
 List<Stockopname> stockopname = [
