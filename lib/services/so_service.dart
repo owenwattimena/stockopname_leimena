@@ -15,7 +15,9 @@ class SoService {
 
   Future<List<Stockopname>> getSo() async {
     Database db = await database.database;
-    const sql = 'SELECT * FROM stockopname';
+    const sql = '''
+      SELECT * FROM stockopname ORDER BY created_at DESC
+    ''';
     final mapObject = await db.rawQuery(sql);
     List<Stockopname> result = [];
     for (var i = 0; i < mapObject.length; i++) {
