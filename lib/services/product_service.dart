@@ -29,10 +29,29 @@ class ProductService {
 
   Future<bool> storeProduct(Item item) async {
     Database db = await database.database;
-    const sql =
-        'INSERT INTO product(id, sku, barcode, product_name, uom, last_stock) VALUES(?,?,?,?,?,?)';
-    final result = await db.rawInsert(sql,
-        [null, item.sku, item.barcode, item.item, item.uom, item.lastStock]);
+    List<Map<String, Object?>> mapObject = await db.rawQuery('SELECT * FROM product WHERE sku = "${item.sku}"');
+    int result = 0;
+    if (mapObject.isEmpty) {
+      const sql = 'INSERT INTO product(id, sku, barcode, product_name, uom, last_stock) VALUES(?,?,?,?,?,?)';
+      result = await db.rawInsert(sql, [
+        null,
+        item.sku,
+        item.barcode,
+        item.item,
+        item.uom,
+        item.lastStock
+      ]);
+    } else {
+      final sql = '''
+      UPDATE product SET 
+      barcode = "${item.barcode}", 
+      product_name = "${item.item}", 
+      uom = "${item.uom}", 
+      last_stock = "${item.lastStock}" 
+      WHERE sku = "${item.sku}"
+      ''';
+      result = await db.rawUpdate(sql);
+    }
     return result > 0;
   }
 }
