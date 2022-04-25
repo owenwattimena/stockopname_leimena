@@ -42,6 +42,7 @@ class Home extends StatelessWidget {
                   homeC.shareBackup();
                   break;
                 case 'Pulihkan':
+                  Navigator.pushNamed(context, 'restore_backup');
                   break;
               }
             },

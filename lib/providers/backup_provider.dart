@@ -8,8 +8,8 @@ class BackupProvider {
   static backup({bool? isEncript}) async {
     DatabaseService database = DatabaseService();
     String backup = await database.generateBackup();
-    var dir = await getApplicationDocumentsDirectory();
-    final String path = "$dir/$backup.scd";
+    var dir = (await getExternalStorageDirectory())!.absolute.path;
+    final String path = "$dir/$backup.txt";
     final file = File(path);
     await file.writeAsString(backup);
     return path;

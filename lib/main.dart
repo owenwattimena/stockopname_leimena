@@ -27,9 +27,10 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         'home': (context) => const Home(),
+        'product': (context) => const Product(),
         'detail_so': (context) => const DetailSo(),
         'item_list_so': (context) => const ItemListSo(),
-        'product': (context) => const Product(),
+        'restore_backup': (context) => const RestoreBackup(),
       },
       home: const Home(),
     );
