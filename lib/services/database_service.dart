@@ -9,7 +9,7 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 // import 'dart:io';
 
 class DatabaseService {
-  static const SECRET_KEY = "WENTOXWTT_PRIVATE_KEY_ENCRYPT_STOCK_COUNTER_2022";
+  static const secretKey = "WENTOXWTT_PRIVATE_KEY_ENCRYPT_STOCK_COUNTER_2022";
   static DatabaseService? _databaseService;
   static Database? _database;
 
@@ -90,7 +90,7 @@ class DatabaseService {
     String json = convert.jsonEncode(backups);
 
     if (isEncrypted) {
-      var key = encrypt.Key.fromUtf8(SECRET_KEY);
+      var key = encrypt.Key.fromUtf8(secretKey);
       var iv = encrypt.IV.fromLength(16);
       var encrypter = encrypt.Encrypter(encrypt.AES(key));
       var encrypted = encrypter.encrypt(json, iv: iv);
@@ -99,5 +99,25 @@ class DatabaseService {
     } else {
       return json;
     }
+  }
+
+  Future<void> restoreBackup(String backup, {bool isEncrypted = true}) async {
+    _database ?? await initDB();
+
+    Batch? batch = _database?.batch();
+
+    var key = encrypt.Key.fromUtf8(secretKey);
+    var iv = encrypt.IV.fromLength(16);
+    var encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+    List json = convert.jsonDecode(isEncrypted ? encrypter.decrypt64(backup, iv: iv) : backup);
+
+    for (var i = 0; i < json[0].length; i++) {
+      for (var k = 0; k < json[1][i].length; k++) {
+        batch!.insert(json[0][i], json[1][i][k]);
+      }
+    }
+
+    await batch!.commit(continueOnError: false, noResult: true);
   }
 }

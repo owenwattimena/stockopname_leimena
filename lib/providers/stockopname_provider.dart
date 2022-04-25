@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:stockopname_leimena/models/stockopname_detail.dart';
-import 'package:stockopname_leimena/providers/stockopname_detail_provider.dart';
+// import 'package:stockopname_leimena/providers/stockopname_detail_provider.dart';
 import 'package:csv/csv.dart';
 import 'package:path_provider/path_provider.dart';
 // import 'package:file_picker/file_picker.dart';

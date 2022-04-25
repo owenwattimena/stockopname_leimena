@@ -17,50 +17,48 @@ class Product extends StatelessWidget {
             IntrinsicHeight(
               child: Padding(
                 padding: const EdgeInsets.only(top: 12.0, left: 12, right: 12),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  const Text('Import'),
+                  Row(
                     children: [
-                      const Text('Import'),
-                      Row(
-                        children: [
-                          const Text('File'),
-                          const SizedBox(width: 12),
-                          Expanded(
-                              child: GestureDetector(
-                                onTap:()async{
-                                  await productC.openFilePicker();
-                                      importFileController.text =
-                                          productC.file.value.name;
-                                },
-                                child: TextField(
-                                    enabled: false,
-                                    controller: importFileController,),
-                              )),
-                          ElevatedButton(
-                            onPressed: () async {
-                              productC.importFile();
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                yellowColor,
-                              ),
-                            ),
-                            child: const Text('Import File'),
-                          ),
-                        ],
-                      ),
+                      const Text('File'),
+                      const SizedBox(width: 12),
                       Expanded(
+                          child: GestureDetector(
+                        onTap: () async {
+                          await productC.openFilePicker();
+                          importFileController.text = productC.file.value.name;
+                        },
                         child: TextField(
-                          onChanged: (value) {
-                            productC.searchItem(value);
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'Cari barcode, kode atau nama',
-                            prefixIcon: Icon(Icons.search),
+                          enabled: false,
+                          controller: importFileController,
+                        ),
+                      )),
+                      ElevatedButton(
+                        onPressed: () async {
+                          productC.importFile();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            yellowColor,
                           ),
                         ),
+                        child: const Text('Import File'),
                       ),
-                    ]),
+                    ],
+                  ),
+                  Expanded(
+                    child: TextField(
+                      onChanged: (value) {
+                        productC.searchItem(value);
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Cari barcode, kode atau nama',
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                ]),
               ),
             ),
             Expanded(
