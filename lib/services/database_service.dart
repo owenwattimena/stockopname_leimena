@@ -1,14 +1,23 @@
 import 'package:sqflite/sqflite.dart';
 // import 'package:flutter/services.dart';
+import 'dart:convert' as convert;
 import 'package:path/path.dart';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 // import 'dart:typed_data';
 // import 'dart:io';
 
 class DatabaseService {
+  static const SECRET_KEY = "WENTOXWTT_PRIVATE_KEY_ENCRYPT_STOCK_COUNTER_2022";
   static DatabaseService? _databaseService;
   static Database? _database;
+
+  List<String> tables = [
+    'stockopname',
+    'product',
+    'so_detail'
+  ];
 
   DatabaseService._createInstance();
 
@@ -25,7 +34,7 @@ class DatabaseService {
 
     // await deleteDatabase(dbPath);
 
-    var db = await openDatabase(dbPath, version: 1, onCreate: (Database db, int version)async{
+    var db = await openDatabase(dbPath, version: 1, onCreate: (Database db, int version) async {
       await db.execute('''
       CREATE TABLE stockopname (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -63,74 +72,32 @@ class DatabaseService {
     return _database!;
   }
 
-  // ambil data nyanyian dengan kondisi
-  // Future getWhere({String search}) async {
-  //   Database db = await this.database;
-  //   var sql;
-  //   if (search != null) {
-  //     sql =
-  //         "SELECT * FROM nyanyian WHERE judul LIKE '$search%' ORDER BY no ASC";
-  //   } else {
-  //     sql = "SELECT * FROM nyanyian ORDER BY no ASC";
-  //   }
+  Future<String> generateBackup({bool isEncrypted = true}) async {
+    _database ?? await initDB();
+    List data = [];
+    List<Map<String, dynamic>>? listMaps = [];
 
-  //   var mapObject = await db.rawQuery(sql);
+    for (var i = 0; i < tables.length; i++) {
+      listMaps = await _database?.query(tables[i]);
 
-  //   int mapLength = mapObject.length;
-  //   List<Nyanyian> listNyanyian = new List<Nyanyian>();
+      data.add(listMaps);
+    }
+    List backups = [
+      tables,
+      data
+    ];
 
-  //   for (int i = 0; i < mapLength; i++) {
-  //     listNyanyian.add(Nyanyian.fromMapObject(mapObject[i]));
-  //   }
-  //   return ReturnValue(value: listNyanyian);
-  // }
+    String json = convert.jsonEncode(backups);
 
-  // ambil data favorit
-  // Future<ReturnValue> getFavorit({String search}) async {
-  //   Database db = await this.database;
+    if (isEncrypted) {
+      var key = encrypt.Key.fromUtf8(SECRET_KEY);
+      var iv = encrypt.IV.fromLength(16);
+      var encrypter = encrypt.Encrypter(encrypt.AES(key));
+      var encrypted = encrypter.encrypt(json, iv: iv);
 
-  //   var sql = "SELECT * FROM nyanyian WHERE favorit = 1 ORDER BY no ASC";
-
-  //   var mapObject = await db.rawQuery(sql);
-
-  //   int mapLength = mapObject.length;
-  //   List<Nyanyian> listNyanyian = new List<Nyanyian>();
-
-  //   for (int i = 0; i < mapLength; i++) {
-  //     listNyanyian.add(Nyanyian.fromMapObject(mapObject[i]));
-  //   }
-  //   return ReturnValue(value: listNyanyian);
-  // }
-
-  // Future<ReturnValue> setFavorit(int id, int favorit) async {
-  //   Database db = await this.database;
-  //   var sql;
-  //   if (favorit == 0) {
-  //     sql = "UPDATE nyanyian SET favorit = 1 WHERE id = $id";
-  //   } else {
-  //     sql = "UPDATE nyanyian SET favorit = 0 WHERE id = $id";
-  //   }
-  //   int result = await db.rawUpdate(sql);
-  //   if (result == 1) {
-  //     return ReturnValue(value: true);
-  //   }
-  //   return ReturnValue(message: "error");
-  // }
-
-  // // ambil data ayat berdasarkan nyanyian
-  // Future<List<Ayat>> getAyat(int idAyat) async {
-  //   Database db = await this.database;
-  //   var sql;
-
-  //   sql = "SELECT * FROM ayat WHERE id_nyanyian = $idAyat ORDER BY no ASC";
-
-  //   var mapObject = await db.rawQuery(sql);
-
-  //   int mapLength = mapObject.length;
-  //   List<Ayat> listAyat = new List<Ayat>();
-  //   for (int i = 0; i < mapLength; i++) {
-  //     listAyat.add(Ayat.fromMap(mapObject[i]));
-  //   }
-  //   return listAyat;
-  // }
+      return encrypted.base64;
+    } else {
+      return json;
+    }
+  }
 }

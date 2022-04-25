@@ -11,6 +11,11 @@ class Home extends StatelessWidget {
     TextEditingController warehouseController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
     var homeC = Get.put(HomeController());
+    var myMenuItems = <String>[
+      'Cadangkan',
+      'Pulihkan'
+    ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -22,6 +27,25 @@ class Home extends StatelessWidget {
               Navigator.pushNamed(context, 'product');
             },
           ),
+          PopupMenuButton<String>(
+            itemBuilder: (BuildContext context) {
+              return myMenuItems.map((String choice) {
+                return PopupMenuItem<String>(
+                  child: Text(choice),
+                  value: choice,
+                );
+              }).toList();
+            },
+            onSelected: (val) {
+              switch (val) {
+                case 'Cadangkan':
+                  homeC.shareBackup();
+                  break;
+                case 'Pulihkan':
+                  break;
+              }
+            },
+          )
         ],
       ),
       body: RefreshIndicator(

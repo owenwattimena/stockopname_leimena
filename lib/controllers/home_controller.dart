@@ -4,6 +4,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stockopname_leimena/providers/backup_provider.dart';
 
 import '../models/stockopname.dart';
 import '../providers/stockopname_provider.dart';
@@ -44,6 +45,13 @@ class HomeController extends GetxController {
     final _share = await StockopnameProvider.export(soId);
     Share.shareFiles([
       _share
+    ]);
+  }
+
+  void shareBackup() {
+    final _backup = BackupProvider.backup();
+    Share.shareFiles([
+      _backup
     ]);
   }
 }
