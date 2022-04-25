@@ -5,9 +5,9 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
 class BackupProvider {
-  static backup({bool? isEncript}) async {
+  static backup({bool isEncript = true}) async {
     DatabaseService database = DatabaseService();
-    String backup = await database.generateBackup();
+    String backup = await database.generateBackup(isEncrypted: isEncript);
     var dir = (await getExternalStorageDirectory())!.absolute.path;
     final String path = "$dir/$backup.txt";
     final file = File(path);
