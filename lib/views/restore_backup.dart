@@ -13,6 +13,7 @@ class RestoreBackup extends StatelessWidget {
         title: const Text('Restore Backup'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Restore'),
           Row(children: [
