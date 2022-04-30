@@ -49,7 +49,7 @@ class HomeController extends GetxController {
   }
 
   void shareBackup() async {
-    final _backup = await BackupProvider.backup();
+    final _backup = await BackupProvider.backup(fileName: generateSoId + '_backup');
     Share.shareFiles([
       _backup
     ]);

@@ -15,7 +15,7 @@ class BackupController extends GetxController {
     }
   }
 
-  void importFile() {
-    BackupProvider.restoreBackup(file.value);
+  Future<bool> importFile() async {
+    return await BackupProvider.restoreBackup(file.value);
   }
 }

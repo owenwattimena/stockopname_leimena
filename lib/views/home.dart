@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 part of 'views.dart';
 
 class Home extends StatelessWidget {
@@ -11,15 +13,12 @@ class Home extends StatelessWidget {
     TextEditingController warehouseController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
     var homeC = Get.put(HomeController());
-    var myMenuItems = <String>[
-      'Cadangkan',
-      'Pulihkan'
-    ];
+    var myMenuItems = <String>['Cadangkan', 'Pulihkan'];
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: const Text('SO RSUP Dr.J.LEIMENA'),
+        title: const Text('Stock Counter'),
         actions: [
           IconButton(
             icon: const Icon(Icons.view_module),
@@ -54,45 +53,60 @@ class Home extends StatelessWidget {
           homeC.getStockopname();
         },
         child: Obx(
-          () => ListView.builder(
-            itemCount: homeC.listStockopname.value.length,
-            itemBuilder: (context, index) {
-              return ItemSo(
-                createdAt: homeC.listStockopname.value[index].createdAt!,
-                createdBy: homeC.listStockopname.value[index].createdBy!,
-                onTap: () async {
-                  await Navigator.pushNamed(context, 'detail_so', arguments: homeC.listStockopname.value[index].soId);
-                  Get.delete<SoDetailController>();
-                },
-                onLongTap: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return IntrinsicHeight(
-                          child: Column(children: [
-                            ListTile(
-                              leading: const Icon(Icons.share),
-                              title: const Text('Bagikan'),
-                              onTap: () {
-                                homeC.shareExportFile(homeC.listStockopname.value[index].soId!);
-                              },
-                            ),
-                          ]),
-                        );
-                      });
-                },
-                warehouse: homeC.listStockopname.value[index].warehouse!,
-                totalItemSo: homeC.listStockopname.value[index].totalSoItem!,
-                soId: homeC.listStockopname.value[index].soId!,
-              );
-            },
-          ),
+          () => homeC.listStockopname.value.isNotEmpty
+              ? ListView.builder(
+                  itemCount: homeC.listStockopname.value.length,
+                  itemBuilder: (context, index) {
+                    return ItemSo(
+                      createdAt: homeC.listStockopname.value[index].createdAt!,
+                      createdBy: homeC.listStockopname.value[index].createdBy!,
+                      onTap: () async {
+                        await Navigator.pushNamed(context, 'detail_so',
+                            arguments: homeC.listStockopname.value[index].soId);
+                        Get.delete<SoDetailController>();
+                      },
+                      onLongTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return IntrinsicHeight(
+                                child: Column(children: [
+                                  ListTile(
+                                    leading: const Icon(Icons.share),
+                                    title: const Text('Bagikan'),
+                                    onTap: () {
+                                      homeC.shareExportFile(homeC
+                                          .listStockopname.value[index].soId!);
+                                    },
+                                  ),
+                                ]),
+                              );
+                            });
+                      },
+                      warehouse: homeC.listStockopname.value[index].warehouse!,
+                      totalItemSo:
+                          homeC.listStockopname.value[index].totalSoItem!,
+                      soId: homeC.listStockopname.value[index].soId!,
+                    );
+                  },
+                )
+              : ListView(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(20.0),
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top,
+                      child: Center(child:Text('Tidak ada data.'))),
+                  ],
+                ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           idSoController.text = homeC.generateSoId;
-          soDateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
+          soDateController.text =
+              DateFormat('yyyy-MM-dd').format(DateTime.now());
           showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -157,7 +171,8 @@ class Home extends StatelessWidget {
                             child: ElevatedButton(
                               child: const Text('CANCEL'),
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
                                   yellowColor,
                                 ),
                               ),

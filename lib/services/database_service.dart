@@ -9,15 +9,11 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 // import 'dart:io';
 
 class DatabaseService {
-  static const secretKey = "WENTOXWTT_PRIVATE_KEY_ENCRYPT_STOCK_COUNTER_2022";
+  static const secretKey = "9110010807980001";
   static DatabaseService? _databaseService;
   static Database? _database;
 
-  List<String> tables = [
-    'stockopname',
-    'product',
-    'so_detail'
-  ];
+  List<String> tables = ['stockopname', 'product', 'so_detail'];
 
   DatabaseService._createInstance();
 
@@ -34,7 +30,8 @@ class DatabaseService {
 
     // await deleteDatabase(dbPath);
 
-    var db = await openDatabase(dbPath, version: 1, onCreate: (Database db, int version) async {
+    var db = await openDatabase(dbPath, version: 1,
+        onCreate: (Database db, int version) async {
       await db.execute('''
       CREATE TABLE stockopname (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -82,10 +79,7 @@ class DatabaseService {
 
       data.add(listMaps);
     }
-    List backups = [
-      tables,
-      data
-    ];
+    List backups = [tables, data];
 
     String json = convert.jsonEncode(backups);
 
@@ -101,7 +95,7 @@ class DatabaseService {
     }
   }
 
-  Future<void> restoreBackup(String backup, {bool isEncrypted = true}) async {
+  Future<bool> restoreBackup(String backup, {bool isEncrypted = true}) async {
     _database ?? await initDB();
 
     Batch? batch = _database?.batch();
@@ -110,14 +104,36 @@ class DatabaseService {
     var iv = encrypt.IV.fromLength(16);
     var encrypter = encrypt.Encrypter(encrypt.AES(key));
 
-    List json = convert.jsonDecode(isEncrypted ? encrypter.decrypt64(backup, iv: iv) : backup);
+    List json = convert
+        .jsonDecode(isEncrypted ? encrypter.decrypt64(backup, iv: iv) : backup);
 
-    for (var i = 0; i < json[0].length; i++) {
-      for (var k = 0; k < json[1][i].length; k++) {
-        batch!.insert(json[0][i], json[1][i][k]);
+    if (json.isNotEmpty) {
+      try {
+        await _database?.transaction((txn) async {
+          var batch = txn.batch();
+          batch.delete(tables[0]);
+          batch.delete(tables[1]);
+          batch.delete(tables[2]);
+          await batch.commit();
+        });
+      } catch (error) {
+        return false;
+        // throw Exception('DbBase.cleanDatabase: ' + error.toString());
       }
     }
 
-    await batch!.commit(continueOnError: false, noResult: true);
+    try {
+      for (var i = 0; i < json[0].length; i++) {
+        for (var k = 0; k < json[1][i].length; k++) {
+          batch!.insert(json[0][i], json[1][i][k]);
+        }
+      }
+
+      await batch!.commit(continueOnError: false, noResult: true);
+      return true;
+    } catch (error) {
+      return false;
+      // throw Exception('DbBase.restoreBackup: ' + error.toString());
+    }
   }
 }

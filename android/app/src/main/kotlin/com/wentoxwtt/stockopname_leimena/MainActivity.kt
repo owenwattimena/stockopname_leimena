@@ -1,4 +1,4 @@
-package com.example.stockopname_leimena
+package com.wentoxwtt.stockopname_leimena
 
 import io.flutter.embedding.android.FlutterActivity
 
