@@ -1,6 +1,6 @@
 {
-    "name": "stockopname_leimena",
-    "short_name": "stockopname_leimena",
+    "name": "stock_counter",
+    "short_name": "stock_counter",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

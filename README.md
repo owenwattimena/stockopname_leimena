@@ -1,4 +1,4 @@
-# stockopname_leimena
+# stock_counter
 
 A new Flutter project.
 

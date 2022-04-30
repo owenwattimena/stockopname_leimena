@@ -1,4 +1,4 @@
-// import 'package:stockopname_leimena/models/stockopname.dart';
+// import 'package:stock_counter/models/stockopname.dart';
 
 class StockopnameDetail {
   int? id;

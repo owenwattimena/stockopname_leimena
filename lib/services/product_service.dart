@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:stockopname_leimena/models/item.dart';
+import 'package:stock_counter/models/item.dart';
 
 import 'database_service.dart';
 

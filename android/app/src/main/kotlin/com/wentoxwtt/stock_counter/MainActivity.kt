@@ -1,4 +1,4 @@
-package com.wentoxwtt.stockopname_leimena
+package com.wentoxwtt.stock_counter
 
 import io.flutter.embedding.android.FlutterActivity
 

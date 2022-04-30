@@ -1,6 +1,6 @@
-import 'package:stockopname_leimena/models/item.dart';
-import 'package:stockopname_leimena/services/so_detail_service.dart';
-// import 'package:stockopname_leimena/views/views.dart';
+import 'package:stock_counter/models/item.dart';
+import 'package:stock_counter/services/so_detail_service.dart';
+// import 'package:stock_counter/views/views.dart';
 
 import '../models/stockopname_detail.dart';
 

@@ -1,8 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:stockopname_leimena/models/stockopname.dart';
-// import 'package:stockopname_leimena/models/stockopname.dart';
-import 'package:stockopname_leimena/services/database_service.dart';
+import 'package:stock_counter/models/stockopname.dart';
+// import 'package:stock_counter/models/stockopname.dart';
+import 'package:stock_counter/services/database_service.dart';
 
 import '../models/stockopname_detail.dart';
 

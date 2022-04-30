@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:csv/csv.dart';
-import 'package:stockopname_leimena/services/product_service.dart';
+import 'package:stock_counter/services/product_service.dart';
 import 'dart:io';
 
 import '../models/item.dart';

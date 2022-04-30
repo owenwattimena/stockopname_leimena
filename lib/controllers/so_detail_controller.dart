@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:stockopname_leimena/models/item.dart';
+import 'package:stock_counter/models/item.dart';
 import '../models/stockopname_detail.dart';
 import '../providers/stockopname_detail_provider.dart';
 
